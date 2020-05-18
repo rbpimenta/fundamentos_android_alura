@@ -28,6 +28,6 @@ public class Aluno {
     @NonNull
     @Override
     public String toString() {
-        return nome + " - " + telefone + " - " + email;
+        return nome;
     }
 }
