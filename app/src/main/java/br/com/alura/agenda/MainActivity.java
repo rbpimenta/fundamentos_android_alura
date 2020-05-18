@@ -1,10 +1,8 @@
 package br.com.alura.agenda;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -12,11 +10,16 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends Activity {
+// AppCompatActivity -> ele é uma boa prática no Android, por dar suporte a versões anteriores do Android
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Adicionar título
+        setTitle("Lista de Alunos");
+
         Toast.makeText(this, "Iniciando APP", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_main);
 
