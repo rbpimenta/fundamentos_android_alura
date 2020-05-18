@@ -1,8 +1,11 @@
 package br.com.alura.agenda.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,6 +33,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1,
                         alunoDAO.findAll()
                 )
+        );
+
+        // Adicionar ação do botão de incluir aluno
+        FloatingActionButton adicionarNovoAluno = findViewById(R.id.lista_alunos_fab_novo_aluno);
+        adicionarNovoAluno.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(
+                                new Intent(
+                                        ListaAlunosActivity.this,
+                                        FormularioAlunoActivity.class
+                                )
+                        );
+                    }
+                }
         );
     }
 }
