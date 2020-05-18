@@ -20,20 +20,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
 
-        final AlunoDAO alunoDAO = new AlunoDAO();
-
         // Adicionar título
         setTitle("Lista de Alunos");
-
-        // Adicionando lista de alunos
-        ListView listViewAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        listViewAlunos.setAdapter(
-                new ArrayAdapter<>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        alunoDAO.findAll()
-                )
-        );
 
         // Adicionar ação do botão de incluir aluno
         FloatingActionButton adicionarNovoAluno = findViewById(R.id.lista_alunos_fab_novo_aluno);
@@ -49,6 +37,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
                         );
                     }
                 }
+        );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final AlunoDAO alunoDAO = new AlunoDAO();
+
+        // Adicionando lista de alunos
+        ListView listViewAlunos = findViewById(R.id.activity_lista_alunos_listview);
+        listViewAlunos.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_list_item_1,
+                        alunoDAO.findAll()
+                )
         );
     }
 }

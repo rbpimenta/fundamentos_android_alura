@@ -1,6 +1,5 @@
 package br.com.alura.agenda.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,12 +36,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
                         alunoDAO.save(novoAluno);
 
-                        startActivity(
-                                new Intent(
-                                        FormularioAlunoActivity.this,
-                                        ListaAlunosActivity.class
-                                )
-                        );
+                        finish();
                     }
                 }
         );
