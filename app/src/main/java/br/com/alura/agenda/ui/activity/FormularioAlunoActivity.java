@@ -35,7 +35,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     public void getAlunoFromParceable () {
-        if (getIntent().getExtras() != null) {
+        if (getIntent().hasExtra("aluno")) {
             aluno = getIntent().getExtras().getParcelable("aluno");
 
             if (aluno != null) {
