@@ -1,5 +1,7 @@
 package br.com.alura.agenda.dao;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,15 +24,7 @@ public class AlunoDAO {
          Ps: Não vamos usar stream pois seria necessário um nível de API superior ou igual a 24
          representando o Android 7.0
         */
-
-        // Obtém o aluno a ser editado
-        Aluno alunoEncontrado = null;
-        for (Aluno alunoOld : alunos) {
-            if (alunoOld.getId().equals(aluno.getId())) {
-                alunoEncontrado = alunoOld;
-                break;
-            }
-        }
+        Aluno alunoEncontrado = findById(aluno.getId());
 
         // Edita os valores do aluno encontrado
         if (alunoEncontrado != null) {
@@ -39,6 +33,19 @@ public class AlunoDAO {
                     aluno
             );
         }
+    }
+
+    @Nullable
+    private Aluno findById(Integer alunoId) {
+        // Obtém o aluno a ser editado
+        Aluno alunoEncontrado = null;
+        for (Aluno alunoOld : alunos) {
+            if (alunoOld.getId().equals(alunoId)) {
+                alunoEncontrado = alunoOld;
+                break;
+            }
+        }
+        return alunoEncontrado;
     }
 
     public void save(Aluno aluno) {

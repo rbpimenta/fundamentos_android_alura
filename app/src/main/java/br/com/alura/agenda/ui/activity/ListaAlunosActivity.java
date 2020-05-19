@@ -20,6 +20,8 @@ import br.com.alura.agenda.model.Aluno;
 // AppCompatActivity -> ele é uma boa prática no Android, por dar suporte a versões anteriores do Android
 public class ListaAlunosActivity extends AppCompatActivity {
     private static final String APP_TITULO = "Lista de Alunos";
+    private static final String CHAVE_ALUNO = "aluno";
+
     final AlunoDAO alunoDAO = new AlunoDAO();
 
     @Override
@@ -49,7 +51,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private void abreFormularioAluno(Aluno alunoEscolhido) {
         Intent goToFormularioAluno = new Intent(this,FormularioAlunoActivity.class);
         if (alunoEscolhido != null) {
-            goToFormularioAluno.putExtra("aluno", alunoEscolhido);
+            goToFormularioAluno.putExtra(ConstantesActivities.CHAVE_ALUNO, alunoEscolhido);
         }
         startActivity(goToFormularioAluno);
     }
@@ -64,23 +66,30 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // Adicionando lista de alunos
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
         final List<Aluno> alunos = alunoDAO.findAll();
+        configurarAdapter(listaAlunos, alunos);
+        configuraListenerDeCliquePorItem(listaAlunos);
+    }
+
+    private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
+        listaAlunos.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
+                        Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+                        Log.i("Student", alunoEscolhido.toString());
+                        abreFormularioAluno(alunoEscolhido);
+                    }
+                }
+        );
+    }
+
+    private void configurarAdapter(ListView listaAlunos, List<Aluno> alunos) {
         listaAlunos.setAdapter(
                 new ArrayAdapter<>(
                         this,
                         android.R.layout.simple_list_item_1,
                         alunos
                 )
-        );
-
-        listaAlunos.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                        Aluno alunoEscolhido = alunos.get(posicao);
-                        Log.i("Student", alunoEscolhido.toString());
-                        abreFormularioAluno(alunoEscolhido);
-                    }
-                }
         );
     }
 }

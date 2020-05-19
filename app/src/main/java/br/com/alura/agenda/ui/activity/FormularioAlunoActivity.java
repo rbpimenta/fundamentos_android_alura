@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Objects;
+
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    private static final String APP_TITULO = "Lista de Alunos";
+    private static final String TITULO_NOVO_ALUNO = "Novo Aluno";
+    private static final String TITULO_UPDATE_ALUNO = "Edita Aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
@@ -24,9 +27,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
 
-        // Adicionar título
-        setTitle(APP_TITULO);
-
         inicializacaoCampos();
         configuraBotaoSalvar();
 
@@ -35,15 +35,19 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     public void getAlunoFromParceable () {
-        if (getIntent().hasExtra("aluno")) {
-            aluno = getIntent().getExtras().getParcelable("aluno");
+        if (getIntent().hasExtra(ConstantesActivities.CHAVE_ALUNO)) {
+            aluno = Objects.requireNonNull(getIntent().getExtras()).getParcelable(ConstantesActivities.CHAVE_ALUNO);
 
             if (aluno != null) {
+                // Adicionar título
+                setTitle(TITULO_UPDATE_ALUNO);
                 campoNome.setText(aluno.getNome());
                 campoTelefone.setText(aluno.getTelefone());
                 campoEmail.setText(aluno.getEmail());
             }
         } else {
+            // Adicionar título
+            setTitle(TITULO_NOVO_ALUNO);
             aluno = new Aluno();
         }
     }
