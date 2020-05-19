@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Objects;
+
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
@@ -31,7 +33,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         configuraBotaoSalvar();
 
         // Obtém dos "extras" o parâmetro aluno que esperamos ser passado
-        Aluno alunoEscolhido = (Aluno) getIntent().getSerializableExtra("aluno");
+        Aluno alunoEscolhido = Objects.requireNonNull(getIntent().getExtras()).getParcelable("aluno");
+        Objects.requireNonNull(alunoEscolhido);
         campoNome.setText(alunoEscolhido.getNome());
         campoTelefone.setText(alunoEscolhido.getTelefone());
         campoEmail.setText(alunoEscolhido.getEmail());
