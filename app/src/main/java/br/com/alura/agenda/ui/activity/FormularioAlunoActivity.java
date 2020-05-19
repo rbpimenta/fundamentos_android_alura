@@ -29,6 +29,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         inicializacaoCampos();
         configuraBotaoSalvar();
+
+        // Obtém dos "extras" o parâmetro aluno que esperamos ser passado
+        Aluno alunoEscolhido = (Aluno) getIntent().getSerializableExtra("aluno");
+        campoNome.setText(alunoEscolhido.getNome());
+        campoTelefone.setText(alunoEscolhido.getTelefone());
+        campoEmail.setText(alunoEscolhido.getEmail());
     }
 
     private void configuraBotaoSalvar() {
