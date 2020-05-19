@@ -12,17 +12,24 @@ import android.support.annotation.NonNull;
  https://medium.com/@lucas_marciano/por-que-usar-o-parcelable-ao-inv%C3%A9s-do-serializable-5f7543a9c7f3
  */
 public class Aluno implements Parcelable {
-    private final String nome;
-    private final String email;
-    private final String telefone;
+    private Integer id;
+    private String nome;
+    private String email;
+    private String telefone;
 
-    public Aluno(String nome, String email, String telefone) {
+    public Aluno () {
+
+    }
+
+    public Aluno(Integer id, String nome, String email, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
 
-    protected Aluno(Parcel in) {
+    private Aluno(Parcel in) {
+        id = in.readInt();
         nome = in.readString();
         email = in.readString();
         telefone = in.readString();
@@ -40,16 +47,36 @@ public class Aluno implements Parcelable {
         }
     };
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getTelefone() {
         return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     @NonNull
@@ -65,8 +92,9 @@ public class Aluno implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(nome);
-        parcel.writeString(telefone);
         parcel.writeString(email);
+        parcel.writeString(telefone);
     }
 }
