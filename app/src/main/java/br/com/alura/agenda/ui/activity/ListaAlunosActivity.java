@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,6 +43,39 @@ public class ListaAlunosActivity extends AppCompatActivity {
         atualizarListaAlunos();
     }
 
+    /**
+     * Criação de menu de contexto para uma atividade
+     * @param menu
+     * @param v
+     * @param menuInfo
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remover");
+    }
+
+    /**
+     * Evento acionado quando um item de contexto é selecionado
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        /*
+         * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
+         * a classe AdapterView.AdapterContextMenuInfo
+         */
+        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        // Obtendo o item selecionado a partir do menu de contexto
+        Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
+        removerAluno(alunoSelecionado);
+
+        return super.onContextItemSelected(item);
+
+    }
+
     private void atualizarListaAlunos() {
         listaAdapter.clear();
         listaAdapter.addAll(alunoDAO.findAll());
@@ -72,19 +107,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
         configurarAdapter(listaAlunos);
         configuraListenerDeCliquePorItem(listaAlunos);
-        configuraListenerDeLongCliquePorItem(listaAlunos);
-    }
 
-    private void configuraListenerDeLongCliquePorItem(ListView listaAlunos) {
-        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Aluno alunoSelecionado = alunoDAO.findById((int) id);
-                removerAluno(alunoSelecionado);
-                // retornar falso significa que o evento será passado adiante, retornar true significa o contrário
-                return true;
-            }
-        });
+        /*
+         Espera-se que seja informado uma view de dentro do nosso layout
+         Nesse caso, podemos enviar a lista de alunos ou o botão "incluir novo"
+         No momento, iremos enviar a nossa lista de alunos
+        */
+        registerForContextMenu(listaAlunos);
     }
 
     private void removerAluno(Aluno alunoSelecionado) {
