@@ -36,7 +36,7 @@ public class AlunoDAO {
     }
 
     @Nullable
-    private Aluno findById(Integer alunoId) {
+    public Aluno findById(Integer alunoId) {
         // Obtém o aluno a ser editado
         Aluno alunoEncontrado = null;
         for (Aluno alunoOld : alunos) {
@@ -55,5 +55,12 @@ public class AlunoDAO {
 
     public List<Aluno> findAll() {
         return new ArrayList<>(alunos);
+    }
+
+    public void remove(Integer id) {
+        Aluno aluno = this.findById(id);
+        if (aluno != null) {
+            alunos.remove(aluno);
+        }
     }
 }
