@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
-
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
@@ -34,6 +32,18 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setTitle(APP_TITULO);
         configurarBotaoAdicionarAluno();
 
+        configuraLista();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        atualizarListaAlunos();
+    }
+
+    private void atualizarListaAlunos() {
+        listaAdapter.clear();
+        listaAdapter.addAll(alunoDAO.findAll());
     }
 
     private void configurarBotaoAdicionarAluno() {
@@ -57,31 +67,31 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(goToFormularioAluno);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        configuraLista();
-    }
-
     private void configuraLista() {
         // Adicionando lista de alunos
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        final List<Aluno> alunos = alunoDAO.findAll();
-        configurarAdapter(listaAlunos, alunos);
+        configurarAdapter(listaAlunos);
         configuraListenerDeCliquePorItem(listaAlunos);
+        configuraListenerDeLongCliquePorItem(listaAlunos);
+    }
 
+    private void configuraListenerDeLongCliquePorItem(ListView listaAlunos) {
         listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Aluno alunoSelecionado = alunoDAO.findById((int) id);
-                if (alunoSelecionado != null) {
-                    alunoDAO.remove(alunoSelecionado.getId());
-                    listaAdapter.remove(alunoSelecionado);
-                }
+                removerAluno(alunoSelecionado);
                 // retornar falso significa que o evento será passado adiante, retornar true significa o contrário
                 return true;
             }
         });
+    }
+
+    private void removerAluno(Aluno alunoSelecionado) {
+        if (alunoSelecionado != null) {
+            alunoDAO.remove(alunoSelecionado.getId());
+            listaAdapter.remove(alunoSelecionado);
+        }
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
@@ -97,11 +107,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         );
     }
 
-    private void configurarAdapter(ListView listaAlunos, List<Aluno> alunos) {
+    private void configurarAdapter(ListView listaAlunos) {
         listaAdapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
-                alunos
+                android.R.layout.simple_list_item_1
         );
         listaAlunos.setAdapter(
                 listaAdapter
