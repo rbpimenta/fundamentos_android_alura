@@ -52,7 +52,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Remover");
+        // Adicionando menus a partir de um arquivo estático
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
+    }
+
+    private void configuraLista() {
+        // Adicionando lista de alunos
+        ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
+        configurarAdapter(listaAlunos);
+        configuraListenerDeCliquePorItem(listaAlunos);
+
+        /*
+         Espera-se que seja informado uma view de dentro do nosso layout
+         Nesse caso, podemos enviar a lista de alunos ou o botão "incluir novo"
+         No momento, iremos enviar a nossa lista de alunos
+        */
+        registerForContextMenu(listaAlunos);
     }
 
     /**
@@ -62,15 +77,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        /*
-         * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
-         * a classe AdapterView.AdapterContextMenuInfo
-         */
-        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if (item.getItemId() == R.id.activity_lista_alunos_menu_remover) {
+            /*
+             * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
+             * a classe AdapterView.AdapterContextMenuInfo
+             */
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        // Obtendo o item selecionado a partir do menu de contexto
-        Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
-        removerAluno(alunoSelecionado);
+            // Obtendo o item selecionado a partir do menu de contexto
+            Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
+            removerAluno(alunoSelecionado);
+        }
 
         return super.onContextItemSelected(item);
 
@@ -100,20 +117,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
             goToFormularioAluno.putExtra(ConstantesActivities.CHAVE_ALUNO, alunoEscolhido);
         }
         startActivity(goToFormularioAluno);
-    }
-
-    private void configuraLista() {
-        // Adicionando lista de alunos
-        ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        configurarAdapter(listaAlunos);
-        configuraListenerDeCliquePorItem(listaAlunos);
-
-        /*
-         Espera-se que seja informado uma view de dentro do nosso layout
-         Nesse caso, podemos enviar a lista de alunos ou o botão "incluir novo"
-         No momento, iremos enviar a nossa lista de alunos
-        */
-        registerForContextMenu(listaAlunos);
     }
 
     private void removerAluno(Aluno alunoSelecionado) {
