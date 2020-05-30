@@ -10,12 +10,12 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 // AppCompatActivity -> ele é uma boa prática no Android, por dar suporte a versões anteriores do Android
 public class ListaAlunosActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private static final String CHAVE_ALUNO = "aluno";
 
     final AlunoDAO alunoDAO = new AlunoDAO();
-    private ArrayAdapter<Aluno> listaAdapter;
+    private ListaAlunosAdapter listaAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,12 +140,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configurarAdapter(ListView listaAlunos) {
-        listaAdapter = new ArrayAdapter<>(
-                this,
-                R.layout.item_aluno
-        );
-        listaAlunos.setAdapter(
-                listaAdapter
-        );
+        listaAdapter = new ListaAlunosAdapter(this);
+        listaAlunos.setAdapter(listaAdapter);
     }
 }
