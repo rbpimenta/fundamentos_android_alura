@@ -14,8 +14,8 @@ public class AlunoDAO {
 
     private final static List<Aluno> alunos = new ArrayList<> (
             Arrays.asList(
-                    new Aluno(counterId++, "Rodrigo", "Rodrigo@email.com", "(xxx) xxxx-xxxx"),
-                    new Aluno(counterId++, "Maurício", "Mauricio@email.com", "(xxx) xxxx-xxxx")
+                    new Aluno(counterId++, "Rodrigo", "Rodrigo@email.com", "(11) 1111-1111"),
+                    new Aluno(counterId++, "Maurício", "Mauricio@email.com", "(22) 2222-2222")
             )
     );
 
