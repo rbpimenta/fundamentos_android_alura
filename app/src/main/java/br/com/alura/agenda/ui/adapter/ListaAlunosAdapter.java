@@ -39,28 +39,37 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater
-                .from(this.context)
-                .inflate(R.layout.item_aluno, parent, false);
-
+        View view = criaView(parent);
         Aluno aluno = alunos.get(position);
+        vinculaDados(view, aluno);
+        return view;
+    }
+
+    private void vinculaDados(View view, Aluno aluno) {
         TextView nome = view.findViewById(R.id.item_aluno_nome);
         nome.setText(aluno.getNome());
 
         TextView telefone = view.findViewById(R.id.item_aluno_telefone);
         telefone.setText(aluno.getTelefone());
+    }
 
-
-        return view;
+    private View criaView(ViewGroup parent) {
+        return LayoutInflater
+                .from(this.context)
+                .inflate(R.layout.item_aluno, parent, false);
     }
 
 
+    public void atualizar(List<Aluno> alunos) {
+        this.clear();
+        this.addAll(alunos);
+    }
 
-    public void clear() {
+    private void clear() {
         alunos.clear();
     }
 
-    public void addAll(List<Aluno> all) {
+    private void addAll(List<Aluno> all) {
         alunos.addAll(all);
     }
 

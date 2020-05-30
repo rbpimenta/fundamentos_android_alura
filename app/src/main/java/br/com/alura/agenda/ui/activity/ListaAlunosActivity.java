@@ -94,8 +94,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizarListaAlunos() {
-        listaAdapter.clear();
-        listaAdapter.addAll(alunoDAO.findAll());
+        listaAdapter.atualizar(alunoDAO.findAll());
     }
 
     private void configurarBotaoAdicionarAluno() {
