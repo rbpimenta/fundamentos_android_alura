@@ -43,19 +43,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         atualizarListaAlunos();
     }
 
-    /**
-     * Criação de menu de contexto para uma atividade
-     * @param menu
-     * @param v
-     * @param menuInfo
-     */
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        // Adicionando menus a partir de um arquivo estático
-        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
-    }
-
     private void configuraLista() {
         // Adicionando lista de alunos
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
@@ -68,6 +55,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
          No momento, iremos enviar a nossa lista de alunos
         */
         registerForContextMenu(listaAlunos);
+    }
+
+    /**
+     * Criação de menu de contexto para uma atividade
+     * @param menu
+     * @param v
+     * @param menuInfo
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        // Adicionando menus a partir de um arquivo estático
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
     }
 
     /**

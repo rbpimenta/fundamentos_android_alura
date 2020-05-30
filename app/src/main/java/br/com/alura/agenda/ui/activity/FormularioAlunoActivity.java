@@ -2,6 +2,8 @@ package br.com.alura.agenda.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,29 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Obtém dos "extras" o parâmetro aluno que esperamos ser passado
         getAlunoFromParceable();
+    }
+
+    /**
+     * Criar menu de opções
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Adicionando menus a partir de um arquivo estático
+        getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.activity_lista_alunos_menu_salvar) {
+            populaDadosAluno();
+            salvarAluno(aluno, alunoDAO);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void getAlunoFromParceable () {
