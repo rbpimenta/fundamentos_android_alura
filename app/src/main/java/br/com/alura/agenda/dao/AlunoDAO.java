@@ -3,7 +3,6 @@ package br.com.alura.agenda.dao;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import br.com.alura.agenda.model.Aluno;
@@ -12,12 +11,12 @@ public class AlunoDAO {
 
     private static int counterId = 0;
 
-    private final static List<Aluno> alunos = new ArrayList<> (
-            Arrays.asList(
-                    new Aluno(counterId++, "Rodrigo", "Rodrigo@email.com", "(11) 1111-1111"),
-                    new Aluno(counterId++, "Maurício", "Mauricio@email.com", "(22) 2222-2222")
-            )
-    );
+    private final static List<Aluno> alunos = new ArrayList<>();
+
+    public void createWith(List<Aluno> listaTeste) {
+        alunos.addAll(listaTeste);
+        counterId = alunos.size();
+    }
 
     public void update (Aluno aluno) {
         /*
