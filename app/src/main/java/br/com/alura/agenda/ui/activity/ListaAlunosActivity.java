@@ -24,7 +24,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private static final String APP_TITULO = "Lista de Alunos";
     private static final String CHAVE_ALUNO = "aluno";
 
-    final AlunoDAO alunoDAO = new AlunoDAO();
+    private final AlunoDAO alunoDAO = new AlunoDAO();
     private ListaAlunosAdapter listaAdapter;
 
     @Override
@@ -62,9 +62,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
     /**
      * Criação de menu de contexto para uma atividade
      *
-     * @param menu
-     * @param v
-     * @param menuInfo
+     * @param menu Menu
+     * @param v View
+     * @param menuInfo MenuInfo
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -76,8 +76,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
     /**
      * Evento acionado quando um item de contexto é selecionado
      *
-     * @param item
-     * @return
+     * @param item item
+     * @return true or false
      */
     @Override
     public boolean onContextItemSelected(final MenuItem item) {

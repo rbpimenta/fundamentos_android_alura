@@ -19,7 +19,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
-    final AlunoDAO alunoDAO = new AlunoDAO();
+    private final AlunoDAO alunoDAO = new AlunoDAO();
     private Aluno aluno;
 
     @Override
@@ -35,8 +35,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     /**
      * Criar menu de opções
-     * @param menu
-     * @return
+     * @param menu menu
+     * @return true or false
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +56,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getAlunoFromParceable () {
+    private void getAlunoFromParceable() {
         if (getIntent().hasExtra(ConstantesActivities.CHAVE_ALUNO)) {
             aluno = Objects.requireNonNull(getIntent().getExtras()).getParcelable(ConstantesActivities.CHAVE_ALUNO);
 

@@ -35,7 +35,7 @@ public class AlunoDAO {
     }
 
     @Nullable
-    public Aluno findById(Integer alunoId) {
+    private Aluno findById(Integer alunoId) {
         // Obtém o aluno a ser editado
         Aluno alunoEncontrado = null;
         for (Aluno alunoOld : alunos) {
