@@ -1,5 +1,6 @@
 package br.com.alura.agenda.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configurarBotaoAdicionarAluno();
 
         configuraLista();
+
+        // Adicionar dialog à listagem
+        new AlertDialog.Builder(this)
+                .setTitle("Remover Aluno")
+                .setMessage("Quer remover o aluno?")
+                .setNegativeButton("Não", null)
+                .setPositiveButton("Sim", null)
+                .show();
     }
 
     @Override
@@ -59,6 +68,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     /**
      * Criação de menu de contexto para uma atividade
+     *
      * @param menu
      * @param v
      * @param menuInfo
@@ -72,6 +82,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     /**
      * Evento acionado quando um item de contexto é selecionado
+     *
      * @param item
      * @return
      */
@@ -111,7 +122,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void abreFormularioAluno(Aluno alunoEscolhido) {
-        Intent goToFormularioAluno = new Intent(this,FormularioAlunoActivity.class);
+        Intent goToFormularioAluno = new Intent(this, FormularioAlunoActivity.class);
         if (alunoEscolhido != null) {
             goToFormularioAluno.putExtra(ConstantesActivities.CHAVE_ALUNO, alunoEscolhido);
         }
