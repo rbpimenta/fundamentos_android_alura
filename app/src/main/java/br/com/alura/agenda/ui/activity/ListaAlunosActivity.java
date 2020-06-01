@@ -22,7 +22,6 @@ import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 // AppCompatActivity -> ele é uma boa prática no Android, por dar suporte a versões anteriores do Android
 public class ListaAlunosActivity extends AppCompatActivity {
     private static final String APP_TITULO = "Lista de Alunos";
-    private static final String CHAVE_ALUNO = "aluno";
 
     private final AlunoDAO alunoDAO = new AlunoDAO();
     private ListaAlunosAdapter listaAdapter;
