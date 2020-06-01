@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:layout_margin="8dp"
-        tools:text="Alex"></TextView>
+        tools:text="Alex" />
 
     <TextView
         android:id="@+id/item_aluno_telefone"
@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        tools:text="3333-3333"></TextView>
+        tools:text="3333-3333" />
 
 </LinearLayout>
