@@ -1,6 +1,7 @@
 package br.com.alura.agenda.ui.activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,14 +37,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configurarBotaoAdicionarAluno();
 
         configuraLista();
-
-        // Adicionar dialog à listagem
-        new AlertDialog.Builder(this)
-                .setTitle("Remover Aluno")
-                .setMessage("Quer remover o aluno?")
-                .setNegativeButton("Não", null)
-                .setPositiveButton("Sim", null)
-                .show();
     }
 
     @Override
@@ -87,21 +80,35 @@ public class ListaAlunosActivity extends AppCompatActivity {
      * @return
      */
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.activity_lista_alunos_menu_remover) {
-            /*
-             * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
-             * a classe AdapterView.AdapterContextMenuInfo
-             */
-            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-            // Obtendo o item selecionado a partir do menu de contexto
-            Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
-            removerAluno(alunoSelecionado);
+            confirmaRemocao(item);
         }
 
         return super.onContextItemSelected(item);
+    }
 
+    private void confirmaRemocao(final MenuItem item) {
+        // Adicionar dialog para confirmar exclusão de aluno
+        new AlertDialog.Builder(this)
+                .setTitle("Remover Aluno")
+                .setMessage("Quer remover o aluno?")
+                .setNegativeButton("Não", null)
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /*
+                         * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
+                         * a classe AdapterView.AdapterContextMenuInfo
+                         */
+                        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+                        // Obtendo o item selecionado a partir do menu de contexto
+                        Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
+                        removerAluno(alunoSelecionado);
+                    }
+                })
+                .show();
     }
 
     private void atualizarListaAlunos() {
