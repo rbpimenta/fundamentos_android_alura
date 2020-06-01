@@ -1,7 +1,6 @@
 package br.com.alura.agenda.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -61,8 +60,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
     /**
      * Criação de menu de contexto para uma atividade
      *
-     * @param menu Menu
-     * @param v View
+     * @param menu     Menu
+     * @param v        View
      * @param menuInfo MenuInfo
      */
     @Override
@@ -93,19 +92,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 .setTitle("Remover Aluno")
                 .setMessage("Quer remover o aluno?")
                 .setNegativeButton("Não", null)
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        /*
-                         * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
-                         * a classe AdapterView.AdapterContextMenuInfo
-                         */
-                        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                .setPositiveButton("Sim", (dialog, which) -> {
+                    /*
+                     * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
+                     * a classe AdapterView.AdapterContextMenuInfo
+                     */
+                    AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-                        // Obtendo o item selecionado a partir do menu de contexto
-                        Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
-                        removerAluno(alunoSelecionado);
-                    }
+                    // Obtendo o item selecionado a partir do menu de contexto
+                    Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
+                    removerAluno(alunoSelecionado);
                 })
                 .show();
     }
@@ -118,12 +114,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // Adicionar ação do botão de incluir aluno
         FloatingActionButton adicionarNovoAluno = findViewById(R.id.lista_alunos_fab_novo_aluno);
         adicionarNovoAluno.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        abreFormularioAluno(null);
-                    }
-                }
+                view -> abreFormularioAluno(null)
         );
     }
 
@@ -144,13 +135,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
         listaAlunos.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                        Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-                        Log.i("Student", alunoEscolhido.toString());
-                        abreFormularioAluno(alunoEscolhido);
-                    }
+                (adapterView, view, posicao, id) -> {
+                    Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+                    Log.i("Student", alunoEscolhido.toString());
+                    abreFormularioAluno(alunoEscolhido);
                 }
         );
     }
