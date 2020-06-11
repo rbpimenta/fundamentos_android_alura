@@ -2,7 +2,8 @@ package br.com.alura.agenda.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  Curiosidade: Vamos substituir de Serializable para Parceable como recomendado.
