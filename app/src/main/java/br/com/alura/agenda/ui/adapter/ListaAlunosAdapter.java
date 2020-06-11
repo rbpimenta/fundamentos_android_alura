@@ -13,6 +13,9 @@ import java.util.List;
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.model.Aluno;
 
+/**
+ * Adapter Personalizado da Lista de Alunos
+ */
 public class ListaAlunosAdapter extends BaseAdapter {
 
     private final List<Aluno> alunos = new ArrayList<>();

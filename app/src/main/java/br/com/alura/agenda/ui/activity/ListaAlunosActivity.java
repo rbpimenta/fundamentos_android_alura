@@ -1,6 +1,5 @@
 package br.com.alura.agenda.ui.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,20 +9,17 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import br.com.alura.agenda.R;
-import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
-import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
+import br.com.alura.agenda.ui.ListaAlunosView;
 
 // AppCompatActivity -> ele é uma boa prática no Android, por dar suporte a versões anteriores do Android
 public class ListaAlunosActivity extends AppCompatActivity {
     private static final String APP_TITULO = "Lista de Alunos";
 
-    private final AlunoDAO alunoDAO = new AlunoDAO();
-    private ListaAlunosAdapter listaAdapter;
+    private ListaAlunosView listaAlunosView = new ListaAlunosView(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,13 +36,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        atualizarListaAlunos();
+        listaAlunosView.atualizarListaAlunos();
     }
 
     private void configuraLista() {
         // Adicionando lista de alunos
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        configurarAdapter(listaAlunos);
+        listaAlunosView.configurarAdapter(listaAlunos);
         configuraListenerDeCliquePorItem(listaAlunos);
 
         /*
@@ -80,35 +76,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.activity_lista_alunos_menu_remover) {
-            confirmaRemocao(item);
+            listaAlunosView.confirmaRemocao(item);
         }
 
         return super.onContextItemSelected(item);
     }
 
-    private void confirmaRemocao(final MenuItem item) {
-        // Adicionar dialog para confirmar exclusão de aluno
-        new AlertDialog.Builder(this)
-                .setTitle("Remover Aluno")
-                .setMessage("Quer remover o aluno?")
-                .setNegativeButton("Não", null)
-                .setPositiveButton("Sim", (dialog, which) -> {
-                    /*
-                     * Como estamos falando de um AdapterView, precisamos pegar as informações do menu utilizando
-                     * a classe AdapterView.AdapterContextMenuInfo
-                     */
-                    AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-                    // Obtendo o item selecionado a partir do menu de contexto
-                    Aluno alunoSelecionado = listaAdapter.getItem(adapterContextMenuInfo.position);
-                    removerAluno(alunoSelecionado);
-                })
-                .show();
-    }
-
-    private void atualizarListaAlunos() {
-        listaAdapter.atualizar(alunoDAO.findAll());
-    }
 
     private void configurarBotaoAdicionarAluno() {
         // Adicionar ação do botão de incluir aluno
@@ -126,13 +100,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(goToFormularioAluno);
     }
 
-    private void removerAluno(Aluno alunoSelecionado) {
-        if (alunoSelecionado != null) {
-            alunoDAO.remove(alunoSelecionado.getId());
-            listaAdapter.remove(alunoSelecionado);
-        }
-    }
-
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
         listaAlunos.setOnItemClickListener(
                 (adapterView, view, posicao, id) -> {
@@ -141,10 +108,5 @@ public class ListaAlunosActivity extends AppCompatActivity {
                     abreFormularioAluno(alunoEscolhido);
                 }
         );
-    }
-
-    private void configurarAdapter(ListView listaAlunos) {
-        listaAdapter = new ListaAlunosAdapter(this);
-        listaAlunos.setAdapter(listaAdapter);
     }
 }
