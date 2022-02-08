@@ -2,9 +2,17 @@
 
 *Em desenvolvimento*
 
-Este repositório tem como objetivo implementar o projeto **[Layout Android](https://cursos.alura.com.br/course/layout-android-1/)** da Alura.
+Este repositório tem como objetivo implementar o curso de **[Android]** da Alura. Composto por três partes
+
+1. https://cursos.alura.com.br/course/android-sua-primeira-app-mobile
+2. https://cursos.alura.com.br/course/android-avancando-listeners-menu-ui
+3. https://cursos.alura.com.br/course/android-refinando-o-projeto
 
 ## English
 *In Progress*
 
-In this repository we will implement the project **[Layout Android](https://cursos.alura.com.br/course/layout-android-1/)** from Alura.
+This is a repository to implement the project from Android's course from Alura. It has the following sections:
+
+1. https://cursos.alura.com.br/course/android-sua-primeira-app-mobile
+2. https://cursos.alura.com.br/course/android-avancando-listeners-menu-ui
+3. https://cursos.alura.com.br/course/android-refinando-o-projeto
